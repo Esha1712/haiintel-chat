@@ -8,6 +8,7 @@ import { streamText } from '../utils/streamText';
 import { loadMessages, saveMessages } from '../utils/storage';
 import { Suggestions } from './Suggestions';
 import MinimiseIcon from '../assets/Minimise_Icon.svg';
+import Send from '../assets/Send.svg';
 
 export function ChatWindow({ onClose }: { onClose: () => void }) {
     const [messages, setMessages] = useState<ChatMessage[]>(() => {
@@ -203,23 +204,20 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
               focus:border-white/40
             "
                     />
-
-                    <button
-                        onClick={() => sendMessage()}
-                        disabled={isTyping}
-                        className="
-              px-4
-              rounded-md
-              bg-indigo-600
-              text-white
-              text-sm
-              hover:bg-indigo-500
-              disabled:opacity-50
-              transition
-            "
-                    >
-                        Send
-                    </button>
+                    <img
+                        src={Send}
+                        alt="Send button"
+                        onClick={() => {
+                            if (!isTyping) sendMessage();
+                        }}
+                        className={`
+    p-1 rounded-md transition
+    ${isTyping
+                                ? 'opacity-40 cursor-not-allowed pointer-events-none'
+                                : 'cursor-pointer hover:bg-white/10'
+                            }
+  `}
+                    />
                 </div>
             </div>
         </motion.div>
