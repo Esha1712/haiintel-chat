@@ -1,7 +1,9 @@
-export type Role = 'user' | 'ai';
+export type MessageFeedback = 'like' | 'dislike' | null;
 
 export interface ChatMessage {
   id: string;
-  role: Role;
+  role: 'user' | 'ai';
   content: string;
+  feedback?: 'like' | 'dislike' | null;
+  createdAt: number;
 }

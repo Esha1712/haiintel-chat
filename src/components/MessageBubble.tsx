@@ -1,17 +1,94 @@
 import type { ChatMessage } from '../types/chat';
+import { formatTime } from '../utils/formatTime';
 
-export function MessageBubble({ message }: { message: ChatMessage }) {
+interface Props {
+  message: ChatMessage;
+  onFeedback?: (id: string, feedback: 'like' | 'dislike') => void;
+}
+
+export function MessageBubble({ message, onFeedback }: Props) {
   const isUser = message.role === 'user';
 
   return (
-    <div
-      className={`max-w-[80%] px-4 py-2 rounded-lg text-sm ${
-        isUser
-          ? 'ml-auto bg-indigo-600 text-white'
-          : 'bg-gray-800 text-gray-100'
-      }`}
-    >
-      {message.content}
+    <div className="w-full flex">
+      <div
+        className={`flex w-full ${isUser ? 'justify-end' : 'justify-start'
+          }`}
+      >
+        <div
+          className={`flex gap-3 ${isUser ? 'max-w-[70%] items-end text-right' : 'max-w-[88%] items-start text-left'
+            }`}
+        >
+          {!isUser && (
+            <div className="h-8 w-8 rounded-full bg-black flex items-center justify-center shrink-0">
+              <span className="text-white text-xs">AI</span>
+            </div>
+          )}
+
+          <div className="flex flex-col">
+            <div
+              className={`flex items-center gap-2 text-xs mb-1 ${isUser ? 'justify-end' : 'justify-start'
+                }`}
+            >
+              <span className="font-medium text-white">
+                {isUser ? 'You' : 'HaiIntel AI'}
+              </span>
+
+              <span className="text-gray-400">
+                {formatTime(message.createdAt)}
+              </span>
+
+              {!isUser && onFeedback && (
+                <div className="flex gap-2 ml-2 text-gray-400">
+                  <button
+                    onClick={() => onFeedback(message.id, 'like')}
+                    className={`
+    px-2 py-1 rounded-md transition
+    ${message.feedback === 'like'
+                        ? 'bg-green-500/20'
+                        : 'hover:bg-white/10'
+                      }
+  `}
+                  >
+                    👍
+                  </button>
+
+                  <button
+                    onClick={() => onFeedback(message.id, 'dislike')}
+                    className={`
+    px-2 py-1 rounded-md transition
+    ${message.feedback === 'dislike'
+                        ? 'bg-red-500/20'
+                        : 'hover:bg-white/10'
+                      }
+  `}
+                  >
+                    👎
+                  </button>
+
+                </div>
+              )}
+            </div>
+
+            <div
+              className={`
+    px-4 py-3
+    rounded-2xl
+    text-sm
+    leading-relaxed
+    whitespace-pre-wrap
+    break-words
+    ${isUser
+                  ? 'bg-indigo-600 text-white text-left'
+                  : 'bg-white/15 backdrop-blur-md border border-white/10 text-white text-left'
+                }
+  `}
+            >
+              {message.content}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

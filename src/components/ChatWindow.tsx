@@ -7,68 +7,106 @@ import { AI_RESPONSES } from '../data/aiResponses';
 import { streamText } from '../utils/streamText';
 import { loadMessages, saveMessages } from '../utils/storage';
 import { Suggestions } from './Suggestions';
+import MinimiseIcon from '../assets/Minimise_Icon.svg';
 
-export function ChatWindow() {
-    const [messages, setMessages] = useState<ChatMessage[]>(
-        () => loadMessages<ChatMessage[]>() ?? []
-    );
+export function ChatWindow({ onClose }: { onClose: () => void }) {
+    const [messages, setMessages] = useState<ChatMessage[]>(() => {
+        const stored = loadMessages<ChatMessage[]>() ?? [];
+
+        return stored.map(msg => ({
+            ...msg,
+            createdAt: msg.createdAt ?? Date.now(),
+        }));
+    });
     const [input, setInput] = useState('');
     const [isTyping, setIsTyping] = useState(false);
-    const bottomRef = useRef<HTMLDivElement | null>(null);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
+    const bottomRef = useRef<HTMLDivElement | null>(null);
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const shouldAutoScrollRef = useRef(true);
+
     useEffect(() => {
+        if (!shouldAutoScrollRef.current) {
+            shouldAutoScrollRef.current = true;
+            return;
+        }
+
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, isTyping]);
+    }, [messages, isTyping, showSuggestions]);
 
     useEffect(() => {
         saveMessages(messages);
     }, [messages]);
 
-    async function sendMessage() {
-        if (!input.trim() || isTyping) return;
+    const setFeedback = (messageId: string, feedback: 'like' | 'dislike') => {
+        shouldAutoScrollRef.current = false;
+
+        setMessages(prev =>
+            prev.map(msg =>
+                msg.id === messageId
+                    ? {
+                        ...msg,
+                        feedback: msg.feedback === feedback ? null : feedback,
+                    }
+                    : msg
+            )
+        );
+    };
+
+    const sendMessage = async (text?: string) => {
+        const value = (text ?? input).trim();
+        if (!value || isTyping) return;
+
         setShowSuggestions(false);
 
         const userMessage: ChatMessage = {
             id: crypto.randomUUID(),
             role: 'user',
-            content: input,
+            content: value,
+            createdAt: Date.now(),
         };
 
         setMessages(prev => [...prev, userMessage]);
         setInput('');
-
-        // Simulate AI thinking
         setIsTyping(true);
 
         const aiMessageId = crypto.randomUUID();
-        let aiContent = '';
-
-        // Add empty AI message first
         setMessages(prev => [
             ...prev,
             {
                 id: aiMessageId,
                 role: 'ai',
                 content: '',
+                feedback: null,
+                createdAt: Date.now(),
             },
         ]);
 
         const response =
             AI_RESPONSES[Math.floor(Math.random() * AI_RESPONSES.length)];
 
+        let aiContent = '';
+
         await streamText(response, partial => {
             aiContent = partial;
             setMessages(prev =>
-                prev.map(msg =>
-                    msg.id === aiMessageId
-                        ? { ...msg, content: aiContent }
-                        : msg
+                prev.map(m =>
+                    m.id === aiMessageId
+                        ? {
+                            ...m,
+                            content: aiContent,
+                            feedback: m.feedback ?? null,
+                        }
+                        : m
                 )
             );
         });
+
+
         setIsTyping(false);
         setShowSuggestions(true);
+        inputRef.current?.focus();
     }
 
     return (
@@ -77,44 +115,112 @@ export function ChatWindow() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-24 right-6 w-96 h-[500px] bg-gray-900 rounded-xl shadow-2xl z-40 flex flex-col"
+            className="
+        fixed bottom-24 right-6
+        w-96 h-[520px]
+        z-40
+        rounded-2xl
+
+        bg-white/8
+        backdrop-blur-2xl
+        border border-white/15
+        shadow-[0_8px_40px_rgba(0,0,0,0.6)]
+      "
         >
-            <div className="p-4 border-b border-gray-700 text-white">
-                HaiIntel Assistant
-            </div>
+            <div
+                className="
+          pointer-events-none
+          absolute inset-0
+          rounded-2xl
+          bg-gradient-to-br
+          from-white/20
+          to-transparent
+        "
+            />
+            <div className="relative h-full flex flex-col rounded-2xl bg-black/20 backdrop-blur-md">
+                <div
+                    className="
+    px-4 py-3
+            backdrop-blur-lg
+            text-white
+            font-medium
+            flex justify-between"
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-3">
-                {messages.map(msg => (
-                    <MessageBubble key={msg.id} message={msg} />
-                ))}
-
-                {isTyping && <TypingIndicator />}
-                {showSuggestions && !isTyping && (
-                    <Suggestions
-                        onSelect={text => {
-                            setInput(text);
-                        }}
-                    />
-                )}
-
-                <div ref={bottomRef} />
-            </div>
-
-            <div className="p-3 border-t border-gray-700 flex gap-2">
-                <input
-                    value={input}
-                    onChange={e => setInput(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && sendMessage()}
-                    className="flex-1 bg-gray-800 text-white text-sm px-3 py-2 rounded outline-none"
-                    placeholder="Ask about HaiIntel…"
-                />
-                <button
-                    onClick={sendMessage}
-                    className="bg-indigo-600 px-3 rounded text-white text-sm disabled:opacity-50"
-                    disabled={isTyping}
                 >
-                    Send
-                </button>
+                    <span>HaiIntel Assistant</span>
+                    <img
+                        src={MinimiseIcon}
+                        alt="Minimize chat"
+                        onClick={onClose}
+                        className="cursor-pointer p-1 rounded-md hover:bg-white/10 transition"
+                    />
+                </div>
+
+                <div className="flex-1 overflow-y-auto p-5 space-y-3 text-white">
+                    {messages.map(msg => (
+                        <MessageBubble
+                            key={msg.id}
+                            message={msg}
+                            onFeedback={setFeedback}
+                        />
+                    ))}
+
+                    {isTyping && <TypingIndicator />}
+
+                    {showSuggestions && !isTyping && (
+                        <Suggestions onSelect={text => sendMessage(text)} />
+                    )}
+
+                    <div ref={bottomRef} />
+                </div>
+
+                <div
+                    className="
+            p-3
+            border-t border-white/10
+            bg-black/30
+            backdrop-blur-md
+            flex gap-2
+            rounded-b-2xl
+          "
+                >
+                    <input
+                        ref={inputRef}
+                        value={input}
+                        onChange={e => setInput(e.target.value)}
+                        onKeyDown={e => e.key === 'Enter' && sendMessage()}
+                        placeholder="Ask about HaiIntel…"
+                        className="
+              flex-1
+              bg-black/40
+              text-white
+              text-sm
+              px-3 py-2
+              rounded-md
+              outline-none
+              placeholder-gray-300
+              border border-white/20
+              focus:border-white/40
+            "
+                    />
+
+                    <button
+                        onClick={() => sendMessage()}
+                        disabled={isTyping}
+                        className="
+              px-4
+              rounded-md
+              bg-indigo-600
+              text-white
+              text-sm
+              hover:bg-indigo-500
+              disabled:opacity-50
+              transition
+            "
+                    >
+                        Send
+                    </button>
+                </div>
             </div>
         </motion.div>
     );
