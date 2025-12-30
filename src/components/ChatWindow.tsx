@@ -118,7 +118,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
             transition={{ duration: 0.2 }}
             className="
         fixed bottom-24 right-6
-        w-96 h-[520px]
+        w-96 h-[640px]
         z-40
         rounded-2xl
 
@@ -156,8 +156,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
                         className="cursor-pointer p-1 rounded-md hover:bg-white/10 transition"
                     />
                 </div>
-
-                <div className="flex-1 overflow-y-auto p-5 space-y-3 text-white">
+                <div className="flex-1 overflow-y-auto p-5 space-y-3 text-white glass-scrollbar">
                     {messages.map(msg => (
                         <MessageBubble
                             key={msg.id}
