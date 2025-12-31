@@ -1,5 +1,7 @@
 import { Hand } from 'lucide-react';
 
+// This component shows the initial message and suggested questions when the chat is first opened.
+
 const InitialMessage = ({ sendMessage }: { sendMessage: (text: string) => void }) => {
     return (
         <div className="flex flex-col items-center text-center px-4 py-10 text-white/80">
