@@ -11,6 +11,8 @@ import MinimiseIcon from '../assets/Minimise_Icon.svg';
 import Send from '../assets/Send.svg';
 import InitialMessage from './InitialMessage';
 
+// This component represents the chat window UI. It has the glass UI style and handles user interaction with the AI.
+
 export function ChatWindow({ onClose }: { onClose: () => void }) {
     const [messages, setMessages] = useState<ChatMessage[]>(() => {
         const stored = loadMessages<ChatMessage[]>() ?? [];

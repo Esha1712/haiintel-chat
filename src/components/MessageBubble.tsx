@@ -2,6 +2,8 @@ import type { ChatMessage } from '../types/chat';
 import { formatTime } from '../utils/formatTime';
 import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
+// This component renders an individual message bubble in the chat window, differentiating between user and AI messages, and includes feedback buttons for AI messages.
+
 interface Props {
   message: ChatMessage;
   onFeedback?: (id: string, feedback: 'like' | 'dislike') => void;
