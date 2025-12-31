@@ -1,73 +1,146 @@
-# React + TypeScript + Vite
+HaiIntel Chat Companion — UI Developer Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A floating AI chat companion built as part of the HaiIntel UI Developer Assessment, demonstrating modern UI engineering, AI-native interaction patterns, and brand-aligned design.
 
-Currently, two official plugins are available:
+This project focuses on human-centered AI interfaces, combining clean visual design, thoughtful UX decisions, and simulated AI behaviors to mirror real-world conversational experiences.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ Overview
 
-## React Compiler
+The HaiIntel Chat Companion is a floating, glassmorphic chat widget designed to integrate naturally with HaiIntel’s dark, minimal website aesthetic.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+It demonstrates how AI-driven conversational interfaces can feel:
 
-## Expanding the ESLint configuration
+Calm and purposeful
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Responsive and performant
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Accessible and user-friendly
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+The chat simulates AI responses using static data while showcasing streaming responses, session persistence, feedback mechanisms, and contextual UI states.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+🎯 Key Features
+Conversational UI
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Floating AI launcher with subtle pulse effect
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Expandable chat window with smooth motion transitions
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+User and AI message separation with clear visual hierarchy
+
+Streaming / type-as-you-go AI responses
+
+Typing indicator positioned near the composer for clarity
+
+UX & Interaction
+
+Glassmorphic UI inspired by HaiIntel’s brand theme (dark, minimal)
+
+Neutral, classic user message styling for readability
+
+AI message bubbles with feedback actions (like / dislike)
+
+Follow-up suggestion prompts to guide conversation
+
+First-time empty state with welcome message and starter questions
+
+State & Persistence
+
+Chat messages persisted using localStorage
+
+Feedback state (like / dislike) persisted across refresh
+
+Graceful handling of first-time users and incognito sessions
+
+Performance & Polish
+
+Auto-scroll behavior tuned to avoid jumpiness
+
+Custom subtle scrollbar styling for dark UI
+
+Responsive layout for smaller screens
+
+Disabled input & send action while AI is responding
+
+ESLint configured using modern ESLint v9 flat config
+
+🧠 AI Simulation Details
+
+AI responses are simulated using predefined static content inspired by HaiIntel’s positioning and services
+
+Responses are streamed character-by-character to mimic real AI generation
+
+Follow-up suggestions encourage exploration without overwhelming the user
+
+No real AI APIs are used as part of this challenge.
+
+🤝 AI Collaboration (Tools Used)
+
+AI tools were used as development collaborators, not content generators:
+
+Cursor / ChatGPT
+
+Iterating on UI logic and edge cases
+
+Refining UX decisions (typing indicators, empty states)
+
+Reviewing component structure and state management
+
+All AI-assisted suggestions were manually reviewed, refined, and implemented to ensure correctness and intentional design.
+
+🎨 Design Decisions & Brand Alignment
+
+Brand theme: Dark, minimal, calm — inspired by haiintel.com
+
+Color usage:
+
+Brand accent (indigo) reserved for the AI launcher
+
+Neutral tones used inside the chat to reduce visual noise
+
+Motion: Subtle and purposeful (no distracting animations)
+
+Accessibility: High-contrast text, readable spacing, predictable interactions
+
+🛠 Tech Stack
+
+Framework: React + TypeScript
+
+Build Tool: Vite
+
+Styling: Tailwind CSS
+
+Animation: Framer Motion
+
+State Persistence: Local Storage
+
+Linting: ESLint v9 (flat config, React Hooks + TypeScript rules)
+
+Deployment: Vercel
+
+🚀 Getting Started
+# Install dependencies
+npm install
+
+# Run locally
+npm run dev
+
+# Lint the project
+npm run lint
+
+📦 Deployment
+
+The project is deployed on Vercel and can be embedded as a floating widget or integrated into a larger application.
+
+🧩 What This Demonstrates
+
+This project showcases:
+
+Strong frontend fundamentals
+
+Attention to UX details and edge cases
+
+Ability to translate brand intent into UI
+
+Comfort building AI-style interfaces without backend dependency
+
+Clean, maintainable React + TypeScript code
