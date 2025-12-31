@@ -14,6 +14,6 @@ export function saveMessages(data: unknown) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
   } catch {
-    // ignore write failures
+    // trigger airbrake
   }
 }

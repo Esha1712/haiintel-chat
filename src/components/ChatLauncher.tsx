@@ -4,17 +4,16 @@ export function ChatLauncher({ onClick }: { onClick: () => void }) {
       <button
         onClick={onClick}
         className="
-    relative
-    h-14 w-14
-    rounded-full
-    bg-indigo-600
-    text-white
-    shadow-xl
-    flex items-center justify-center
-    hover:bg-indigo-500
-    transition
-    ai-pulse
-  "
+          relative
+          h-14 w-14
+          rounded-full
+          bg-indigo-600
+          text-white
+          shadow-xl
+          flex items-center justify-center
+          hover:bg-indigo-500
+          transition
+          ai-pulse"
       >
         AI
       </button>
