@@ -120,7 +120,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-4 right-4 sm:bottom-24 sm:right-6 w-[92vw] max-w-[380px] h-[75vh] max-h-[720px]
+            className="fixed bottom-4 right-4 sm:bottom-8 sm:right-6 w-[92vw] max-w-[360px] h-[85vh] max-h-[720px]
                        z-40 rounded-2xl bg-white/8 backdrop-blur-2xl border border-white/15 shadow-[0_8px_40px_rgba(0,0,0,0.6)]"
         >
             <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent" />

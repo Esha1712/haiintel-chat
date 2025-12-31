@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 
 export function TypingIndicator() {
   return (
-    <div className="flex items-center gap-2 text-xs text-white/60">
+    <div className="flex items-center gap-2 text-sm text-white/60">
       <span>HaiIntel AI is typing</span>
 
       <motion.span
