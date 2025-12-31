@@ -1,10 +1,10 @@
-HaiIntel Chat Companion — UI Developer Challenge
+### HaiIntel Chat Companion — UI Developer Challenge
 
 A floating AI chat companion built as part of the HaiIntel UI Developer Assessment, demonstrating modern UI engineering, AI-native interaction patterns, and brand-aligned design.
 
 This project focuses on human-centered AI interfaces, combining clean visual design, thoughtful UX decisions, and simulated AI behaviors to mirror real-world conversational experiences.
 
-✨ Overview
+### Overview
 
 The HaiIntel Chat Companion is a floating, glassmorphic chat widget designed to integrate naturally with HaiIntel’s dark, minimal website aesthetic.
 
@@ -18,7 +18,7 @@ Accessible and user-friendly
 
 The chat simulates AI responses using static data while showcasing streaming responses, session persistence, feedback mechanisms, and contextual UI states.
 
-🎯 Key Features
+### Key Features
 Conversational UI
 
 Floating AI launcher with subtle pulse effect
@@ -63,7 +63,7 @@ Disabled input & send action while AI is responding
 
 ESLint configured using modern ESLint v9 flat config
 
-🧠 AI Simulation Details
+### AI Simulation Details
 
 AI responses are simulated using predefined static content inspired by HaiIntel’s positioning and services
 
@@ -73,7 +73,7 @@ Follow-up suggestions encourage exploration without overwhelming the user
 
 No real AI APIs are used as part of this challenge.
 
-🤝 AI Collaboration (Tools Used)
+### AI Collaboration (Tools Used)
 
 AI tools were used as development collaborators, not content generators:
 
@@ -87,7 +87,7 @@ Reviewing component structure and state management
 
 All AI-assisted suggestions were manually reviewed, refined, and implemented to ensure correctness and intentional design.
 
-🎨 Design Decisions & Brand Alignment
+### Design Decisions & Brand Alignment
 
 Brand theme: Dark, minimal, calm — inspired by haiintel.com
 
@@ -101,7 +101,7 @@ Motion: Subtle and purposeful (no distracting animations)
 
 Accessibility: High-contrast text, readable spacing, predictable interactions
 
-🛠 Tech Stack
+### Tech Stack
 
 Framework: React + TypeScript
 
@@ -117,7 +117,7 @@ Linting: ESLint v9 (flat config, React Hooks + TypeScript rules)
 
 Deployment: Vercel
 
-🚀 Getting Started
+### Getting Started
 # Install dependencies
 npm install
 
@@ -127,11 +127,11 @@ npm run dev
 # Lint the project
 npm run lint
 
-📦 Deployment
+### Deployment
 
 The project is deployed on Vercel and can be embedded as a floating widget or integrated into a larger application.
 
-🧩 What This Demonstrates
+### What This Demonstrates
 
 This project showcases:
 
