@@ -38,7 +38,12 @@ export default function App() {
         {open && <ChatWindow onClose={() => setOpen(false)} />}
       </AnimatePresence>
 
-      <ChatLauncher onClick={() => setOpen(o => !o)} />
+      <AnimatePresence>
+        {!open && (
+          <ChatLauncher onClick={() => setOpen(true)} />
+        )}
+      </AnimatePresence>
+
     </div>
   );
 }

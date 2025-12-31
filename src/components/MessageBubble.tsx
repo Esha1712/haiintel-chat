@@ -1,5 +1,6 @@
 import type { ChatMessage } from '../types/chat';
 import { formatTime } from '../utils/formatTime';
+import { ThumbsUp, ThumbsDown } from 'lucide-react';
 
 interface Props {
   message: ChatMessage;
@@ -41,30 +42,31 @@ export function MessageBubble({ message, onFeedback }: Props) {
               {!isUser && onFeedback && (
                 <div className="flex gap-2 ml-2 text-gray-400">
                   <button
-                    onClick={() => onFeedback(message.id, 'like')}
+                    onClick={() => onFeedback(message.id, 'dislike')}
                     className={`
-    px-2 py-1 rounded-md transition
-    ${message.feedback === 'like'
-                        ? 'bg-green-500/20'
-                        : 'hover:bg-white/10'
+    p-1 rounded-md transition
+    ${message.feedback === 'dislike'
+                        ? 'bg-white/15 text-white'
+                        : 'text-white/50 hover:text-white'
                       }
   `}
                   >
-                    👍
+                    <ThumbsDown size={14} />
                   </button>
 
                   <button
-                    onClick={() => onFeedback(message.id, 'dislike')}
+                    onClick={() => onFeedback(message.id, 'like')}
                     className={`
-    px-2 py-1 rounded-md transition
-    ${message.feedback === 'dislike'
-                        ? 'bg-red-500/20'
-                        : 'hover:bg-white/10'
+    p-1 rounded-md transition
+    ${message.feedback === 'like'
+                        ? 'bg-white/15 text-white'
+                        : 'text-white/50 hover:text-white'
                       }
   `}
                   >
-                    👎
+                    <ThumbsUp size={14} />
                   </button>
+
 
                 </div>
               )}
@@ -76,10 +78,11 @@ export function MessageBubble({ message, onFeedback }: Props) {
     rounded-2xl
     text-sm
     leading-relaxed
-    whitespace-pre-wrap
-    break-words
+ whitespace-pre-wrap
+  break-words
+  [overflow-wrap:anywhere]
     ${isUser
-                  ? 'bg-indigo-600 text-white text-left'
+                  ? 'bg-slate-600/70 text-white text-left'
                   : 'bg-white/15 backdrop-blur-md border border-white/10 text-white text-left'
                 }
   `}
