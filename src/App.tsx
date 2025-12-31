@@ -17,6 +17,7 @@ export default function App() {
         className="pointer-events-none absolute -top-32 -right-32 h-[420px] w-[420px] rounded-full bg-indigo-500/25 blur-[120px]"
       />
 
+      {/* Chat window will be opened when the user clicks the launcher button */}
       <AnimatePresence>
         {open && <ChatWindow onClose={() => setOpen(false)} />}
       </AnimatePresence>

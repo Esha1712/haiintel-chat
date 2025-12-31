@@ -38,13 +38,13 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
         }
 
         bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages, isTyping, showSuggestions]);
+    }, [messages, isTyping, showSuggestions]); // Needs to be scrolled when suggestions appear.
 
     useEffect(() => {
         saveMessages(messages);
-    }, [messages]);
+    }, [messages]); // When messages change, save to local storage.
 
-    const setFeedback = (messageId: string, feedback: 'like' | 'dislike') => {
+    const setFeedback = (messageId: string, feedback: 'like' | 'dislike') => { // Store each message feedback with likes and dislikes.
         shouldAutoScrollRef.current = false;
 
         setMessages(prev =>
@@ -65,7 +65,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
 
         setShowSuggestions(false);
 
-        const userMessage: ChatMessage = {
+        const userMessage: ChatMessage = { // Create user message object.
             id: crypto.randomUUID(),
             role: 'user',
             content: value,
@@ -76,7 +76,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
         setInput('');
         setIsTyping(true);
 
-        const aiMessageId = crypto.randomUUID();
+        const aiMessageId = crypto.randomUUID(); // Create AI message object.
         setMessages(prev => [
             ...prev,
             {
@@ -93,7 +93,7 @@ export function ChatWindow({ onClose }: { onClose: () => void }) {
 
         let aiContent = '';
 
-        await streamText(response, partial => {
+        await streamText(response, partial => { // Simulate streaming text from AI.
             aiContent = partial;
             setMessages(prev =>
                 prev.map(m =>

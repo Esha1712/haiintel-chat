@@ -35,7 +35,7 @@ export function MessageBubble({ message, onFeedback }: Props) {
               </span>
 
               <span className="text-gray-400">
-                {formatTime(message.createdAt)}
+                {formatTime(message.createdAt)} {/* Timestamp to be displayed for each message */}
               </span>
 
               {!isUser && onFeedback && (
